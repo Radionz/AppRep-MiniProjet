@@ -20,6 +20,7 @@ public class Client1 {
     public static void main(String[] args) {
         //Example seller / buyer of vehicles
         logger.info("Example seller / buyer of vehicles");
+        logger.info("Buyer side, retrieves the list of vehicles for sale");
 
         try {
             logger.trace("Trying to get the registry bound on port " + PORT);
@@ -30,6 +31,8 @@ public class Client1 {
         } catch (RemoteException e1) {
             e1.printStackTrace();
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (ClassCastException e) {
             e.printStackTrace();
         }
     }

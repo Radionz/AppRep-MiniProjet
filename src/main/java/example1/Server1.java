@@ -35,6 +35,7 @@ public class Server1 {
         clients.add("Onix");
 
         logger.info("Example seller / buyer of vehicles");
+        logger.info("Seller side, gives the list of vehicles for sale");
 
         try {
             logger.trace("Server initialization on port " + PORT);

@@ -44,19 +44,17 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
             registryTable.put(key, object);
             if (!events.contains(key))
                 events.add(new Event(key, timestamp));
-            else {
-                for (Event event : events)
-                    if (event.getKey().equals(key))
-                        event.wasRequested(timestamp);
-            }
             timestamp++;
         } else throw new NotSerializableException();
     }
 
     public Object lookup(String key) throws RemoteException, NotBoundException {
-        if (registryTable.containsKey(key))
+        if (registryTable.containsKey(key)) {
+            for (Event event : events)
+                if (event.getKey().equals(key))
+                    event.wasRequested(timestamp);
             return registryTable.get(key);
-        else throw new NotBoundException();
+        } else throw new NotBoundException();
     }
 
     public int getLastEventNumber() throws RemoteException {
