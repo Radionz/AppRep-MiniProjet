@@ -1,7 +1,8 @@
 package example1;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import registry.IMyRegistry;
-import registry.MyRegistry;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -13,11 +14,19 @@ import java.rmi.registry.Registry;
  */
 public class Client1 {
 
+    private static final Logger logger = LogManager.getLogger(Server1.class);
+    private static final int PORT = 4000;
+
     public static void main(String[] args) {
+        //Example seller / buyer of vehicles
+        logger.info("Example seller / buyer of vehicles");
+
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 4000);
+            logger.trace("Trying to get the registry bound on port " + PORT);
+            Registry registry = LocateRegistry.getRegistry("localhost", PORT);
             IMyRegistry myRegistry = (IMyRegistry) registry.lookup("registry");
-            System.out.println(myRegistry.lookup("vehicles"));
+
+            logger.debug("List of vehicles " + myRegistry.lookup("vehicles"));
         } catch (RemoteException e1) {
             e1.printStackTrace();
         } catch (NotBoundException e) {

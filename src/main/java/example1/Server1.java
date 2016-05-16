@@ -34,10 +34,10 @@ public class Server1 {
         clients.add("Rihanna");
         clients.add("Onix");
 
-        logger.trace("Example seller / buyer of vehicles");
+        logger.info("Example seller / buyer of vehicles");
 
         try {
-            logger.debug("Server initialization on port " + PORT);
+            logger.trace("Server initialization on port " + PORT);
             MyRegistry myRegistry = new MyRegistry(PORT);
             myRegistry.rebind("vehicles", vehicles);
             myRegistry.rebind("clients", clients);
@@ -47,6 +47,6 @@ public class Server1 {
             e.printStackTrace();
         }
 
-        logger.debug("Server running");
+        logger.trace("Server running");
     }
 }
