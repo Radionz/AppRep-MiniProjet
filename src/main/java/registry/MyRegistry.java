@@ -1,3 +1,5 @@
+package registry;
+
 import java.io.NotSerializableException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
@@ -11,7 +13,7 @@ import java.util.stream.Stream;
 /**
  * Created by blanc on 16/05/2016.
  */
-public class MyRegistry extends UnicastRemoteObject implements IMyRegistry {
+public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Serializable {
 
     private Hashtable<String, Object> registryTable;
     private List<Event> events;
@@ -31,7 +33,7 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry {
 
         try {
             registry = LocateRegistry.createRegistry(port);
-            registry.rebind("registry", registry);
+            registry.rebind("registry", this);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

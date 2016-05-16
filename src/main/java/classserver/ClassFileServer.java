@@ -1,3 +1,5 @@
+package classserver;
+
 /**
  * The ClassFileServer implements a ClassServer that
  * reads class files from the file system. See the

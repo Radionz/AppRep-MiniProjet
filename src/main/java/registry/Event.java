@@ -1,3 +1,5 @@
+package registry;
+
 /**
  * Created by blanc on 16/05/2016.
  */

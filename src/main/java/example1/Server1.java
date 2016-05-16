@@ -1,15 +1,17 @@
+package example1;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import registry.MyRegistry;
 
 import java.io.NotSerializableException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerV2 {
+public class Server1 {
 
-    private static final Logger logger = LogManager.getLogger(ServerV2.class);
+    private static final Logger logger = LogManager.getLogger(Server1.class);
     private static final int PORT = 4000;
 
     public static void main(String[] args) {

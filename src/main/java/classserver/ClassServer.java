@@ -1,3 +1,5 @@
+package classserver;
+
 /**
  * ClassServer is an abstract class that provides the
  * basic functionality of a mini-webserver, specialized
