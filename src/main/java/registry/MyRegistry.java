@@ -85,8 +85,9 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
         Map<String, Integer> occurencesOrdered = new LinkedHashMap<>();
         Stream<Map.Entry<String, Integer>> entryStream = occurences.entrySet().stream();
         entryStream.sorted(Map.Entry.comparingByValue()).forEachOrdered(stringIntegerEntry -> occurencesOrdered.put(stringIntegerEntry.getKey(), stringIntegerEntry.getValue()));
-        for (String key : occurencesOrdered.keySet()) {
-            strings.add(key);
+        ArrayList<String> keys = new ArrayList<>(occurencesOrdered.keySet());
+        for(int i=keys.size()-1; i>=0;i--){
+            strings.add(keys.get(i));
             if (strings.size() >= quantity) break;
         }
         return strings;
