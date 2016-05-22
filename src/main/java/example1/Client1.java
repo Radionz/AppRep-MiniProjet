@@ -27,7 +27,13 @@ public class Client1 {
             Registry registry = LocateRegistry.getRegistry("localhost", PORT);
             IMyRegistry myRegistry = (IMyRegistry) registry.lookup("registry");
 
+
             logger.debug("List of vehicles " + myRegistry.lookup("vehicles"));
+            logger.debug("getLast " + myRegistry.getLast(5));
+            logger.debug("getLastEventNumber " + myRegistry.getLastEventNumber());
+            logger.debug("lastKeys " + myRegistry.lastKeys(5));
+            logger.debug("mostRequestedKeys " + myRegistry.mostRequestedKeys(5));
+
         } catch (RemoteException e1) {
             e1.printStackTrace();
         } catch (NotBoundException e) {
