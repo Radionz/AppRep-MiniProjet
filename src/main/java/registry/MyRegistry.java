@@ -79,17 +79,12 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
 
     public List<String> mostRequestedKeys(int quantity) throws RemoteException {
         List<String> strings = new ArrayList<>();
-        Map<String, Integer> occurences = new HashMap<>();
-        for (Event event : events)
-            occurences.put(event.getKey(), event.getRequestNb());
-        Map<String, Integer> occurencesOrdered = new LinkedHashMap<>();
-        Stream<Map.Entry<String, Integer>> entryStream = occurences.entrySet().stream();
-        entryStream.sorted(Map.Entry.comparingByValue()).forEachOrdered(stringIntegerEntry -> occurencesOrdered.put(stringIntegerEntry.getKey(), stringIntegerEntry.getValue()));
-        ArrayList<String> keys = new ArrayList<>(occurencesOrdered.keySet());
-        for(int i=keys.size()-1; i>=0;i--){
-            strings.add(keys.get(i));
-            if (strings.size() >= quantity) break;
-        }
+        events.sort((Event e1, Event e2) -> new Integer(e2.getRequestNb()).compareTo(e1.getRequestNb()));
+        if(quantity > events.size())
+            quantity = events.size();
+        for(Event event : events.subList(0,quantity))
+            strings.add(event.getKey());
+
         return strings;
     }
 }
