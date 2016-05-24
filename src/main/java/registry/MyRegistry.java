@@ -87,4 +87,15 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
 
         return strings;
     }
+
+    public List<String> mostRequestedKeys(int quantity, int interval) throws RemoteException {
+        List<String> strings = new ArrayList<>();
+        events.sort((Event e1, Event e2) -> new Integer(e2.getRequestNb()).compareTo(e1.getRequestNb()));
+        if(quantity > events.size())
+            quantity = events.size();
+        for(Event event : events.subList(0,quantity))
+            if(event.getTimestamp() > interval ) strings.add(event.getKey());
+
+        return strings;
+    }
 }
