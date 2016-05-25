@@ -1,9 +1,11 @@
 package registry;
 
+import javax.jms.Queue;
 import java.io.NotSerializableException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.List;
+
 /**
  * Created by blanc on 16/05/2016.
  */
@@ -20,4 +22,8 @@ public interface IMyRegistry extends java.rmi.Remote {
     List<String> lastKeys(int quantity) throws RemoteException;
 
     List<String> mostRequestedKeys(int quantity) throws RemoteException;
+
+    Queue getQueue() throws RemoteException;
+
+    ;
 }
