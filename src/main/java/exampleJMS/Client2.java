@@ -9,7 +9,7 @@ import javax.jms.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class Client2 implements javax.jms.MessageListener {
+public class Client2 implements MessageListener {
 
     private static final Logger logger = LogManager.getLogger(Client2.class);
     private static final int PORT_RMI = 4000;
@@ -17,11 +17,11 @@ public class Client2 implements javax.jms.MessageListener {
 
     private void consumer(int portRMI, int portJMS) {
         try {
-            javax.jms.ConnectionFactory connectionFactory;
+            ConnectionFactory connectionFactory;
             connectionFactory = new ActiveMQConnectionFactory("user", "password", "tcp://localhost:" + portJMS);
             Connection connection = connectionFactory.createConnection("user", "password");
 
-            Session session = connection.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Queue queue = null;
             try {
                 Registry registry = LocateRegistry.getRegistry("localhost", portRMI);
@@ -30,10 +30,10 @@ public class Client2 implements javax.jms.MessageListener {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            javax.jms.MessageConsumer messageConsumer = session.createConsumer(queue);
+            MessageConsumer messageConsumer = session.createConsumer(queue);
             messageConsumer.setMessageListener(this);
             connection.start();
-        } catch (javax.jms.JMSException e) {
+        } catch (JMSException e) {
             e.printStackTrace();
         }
     }

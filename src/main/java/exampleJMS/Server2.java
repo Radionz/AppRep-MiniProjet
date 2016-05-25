@@ -3,12 +3,9 @@ package exampleJMS;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import registry.IMyRegistry;
 import registry.MyRegistry;
 
 import javax.jms.*;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 /**
  * Created by Dorian on 21/03/2016.
@@ -40,7 +37,7 @@ public class Server2 {
             TextMessage textMessage = session.createTextMessage();
             textMessage.setText("TEST1");
             messageProducer.send(queue, textMessage);
-        } catch (javax.jms.JMSException e) {
+        } catch (JMSException e) {
             e.printStackTrace();
         }
     }
