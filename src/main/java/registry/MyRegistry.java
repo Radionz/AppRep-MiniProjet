@@ -4,10 +4,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
+import javax.jms.*;
 import java.io.NotSerializableException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
@@ -32,8 +29,9 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
     private Registry registry;
     private int timestamp;
 
-    private javax.jms.Queue queue;
-    private javax.jms.Session session;
+    private Queue queue;
+    private Session session;
+    private MessageProducer messageProducer;
 
     public javax.jms.Queue getQueue() {
         return queue;
@@ -63,26 +61,15 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
 
         logger.trace("JMS Queue on port " + portJMS);
         createJMSQueue(portJMS);
-
-        MessageProducer messageProducer;
-        try {
-            messageProducer = session.createProducer(queue);
-
-            for (int i = 0; i < 5; i++) {
-                TextMessage textMessage = session.createTextMessage();
-                textMessage.setText("TEST n°" + i);
-                messageProducer.send(textMessage);
-            }
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
     }
 
     public void rebind(String key, Object object) throws RemoteException, NotSerializableException {
         if (object instanceof Serializable) {
             registryTable.put(key, object);
-            if (!events.contains(key))
+            if (!events.contains(key)) {
                 events.add(new Event(key, timestamp));
+                sendNotification("New object added in the registry. Key: "+key);
+            }
             timestamp++;
         } else throw new NotSerializableException();
     }
@@ -127,7 +114,19 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             this.queue = session.createQueue("jms_queue");
+            messageProducer = session.createProducer(queue);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void sendNotification(String message) {
+        try {
+            for (int i = 0; i < 5; i++) {
+                TextMessage textMessage = session.createTextMessage();
+                textMessage.setText(message);
+                messageProducer.send(textMessage);
+            }
         } catch (JMSException e) {
             e.printStackTrace();
         }

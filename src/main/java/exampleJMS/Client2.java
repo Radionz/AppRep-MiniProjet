@@ -48,16 +48,12 @@ public class Client2 implements javax.jms.MessageListener {
     }
 
     public static void main(String[] args) {
-        startRMIServer(PORT_RMI, PORT_JMS);
-    }
-
-    private static void startRMIServer(int portRMI, int portJMS) {
         logger.info("JMS Example");
 
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
 
-        new Client2().consumer(portRMI, portJMS);
+        new Client2().consumer(PORT_RMI, PORT_JMS);
     }
 }

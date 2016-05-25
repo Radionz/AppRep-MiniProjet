@@ -46,7 +46,6 @@ public class Server2 {
     }
 
     public static void main(String[] args) {
-        //JMS Example
         logger.info("JMS Example");
 
         new Server2().producer(PORT_RMI, PORT_JMS);

@@ -100,7 +100,7 @@ public class ClassFileServer extends ClassServer {
      * application instead of running one separately. In your server
      * main simply create a ClassFileServer: <br><br>
      * <p>
-     * <code>   new ClassFileServer(port, classpath);
+     * <code>   new ClassFileServer(port, classpath
      * </code>
      */
     public static void main(String args[]) {
