@@ -15,8 +15,10 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by blanc on 16/05/2016.
@@ -133,17 +135,20 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
 
     public List<String> mostRequestedKeys(int quantity) throws RemoteException {
         List<String> strings = new ArrayList<>();
-        Map<String, Integer> occurences = new HashMap<>();
-        for (Event event : events)
-            occurences.put(event.getKey(), event.getRequestNb());
-        Map<String, Integer> occurencesOrdered = new LinkedHashMap<>();
-        Stream<Map.Entry<String, Integer>> entryStream = occurences.entrySet().stream();
-        entryStream.sorted(Map.Entry.comparingByValue()).forEachOrdered(stringIntegerEntry -> occurencesOrdered.put(stringIntegerEntry.getKey(), stringIntegerEntry.getValue()));
-        ArrayList<String> keys = new ArrayList<>(occurencesOrdered.keySet());
-        for (int i = keys.size() - 1; i >= 0; i--) {
-            strings.add(keys.get(i));
-            if (strings.size() >= quantity) break;
-        }
+
+        events.sort((Event e1, Event e2) -> new Integer(e2.getRequestNb()).compareTo(e1.getRequestNb()));
+        if (quantity > events.size())
+            quantity = events.size();
+        strings.addAll(events.subList(0, quantity).stream().map(event -> event.getKey()).collect(Collectors.toList()));
+        return strings;
+    }
+
+    public List<String> mostRequestedKeys(int quantity, int interval) throws RemoteException {
+        List<String> strings = new ArrayList<>();
+        events.sort((Event e1, Event e2) -> new Integer(e2.getRequestNb()).compareTo(e1.getRequestNb()));
+        if (quantity > events.size())
+            quantity = events.size();
+        strings.addAll(events.subList(0, quantity).stream().filter(event -> event.getTimestamp() > interval).map(event -> event.getKey()).collect(Collectors.toList()));
         return strings;
     }
 }
