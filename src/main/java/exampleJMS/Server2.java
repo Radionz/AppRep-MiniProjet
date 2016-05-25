@@ -35,7 +35,7 @@ public class Server2 {
             connection.start();
 
             TextMessage textMessage = session.createTextMessage();
-            textMessage.setText("TEST1");
+            textMessage.setText("Message de SERVER1");
             messageProducer.send(queue, textMessage);
         } catch (JMSException e) {
             e.printStackTrace();

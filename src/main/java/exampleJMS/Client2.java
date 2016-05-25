@@ -41,7 +41,7 @@ public class Client2 implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            logger.debug(((TextMessage) message).getText());
+            logger.trace(((TextMessage) message).getText());
         } catch (JMSException e) {
             e.printStackTrace();
         }

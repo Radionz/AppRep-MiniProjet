@@ -11,6 +11,13 @@ import java.util.List;
 
 public class Server1 {
 
+    /**
+     * Cette classe client permet de creer un registre MyRegistry
+     * de le bind dans le registre RMI
+     * et ajoute des infos
+     * enregistrée dans le server pour démontrer le fonctionnement de celui ci.
+     */
+
     private static final Logger logger = LogManager.getLogger(Server1.class);
     private static final int PORT_RMI = 4000;
     private static final int PORT_JMS = 61616;

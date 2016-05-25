@@ -19,9 +19,13 @@ import java.util.Hashtable;
  */
 public class Client1{
 
+    /**
+     * Cette classe client permet de get le registre Myregistry et de lookup les clés
+     * enregistrée dans le server pour démontrer le fonctionnement de celui ci.
+     */
+
     private static final Logger logger = LogManager.getLogger(Server1.class);
     private static final int PORT_RMI = 4000;
-    private static final int PORT_JMS = 4001;
 
     public static void main(String[] args) {
         //Example seller / buyer of vehicles
