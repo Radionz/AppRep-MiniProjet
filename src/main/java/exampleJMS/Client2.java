@@ -11,6 +11,13 @@ import java.rmi.registry.Registry;
 
 public class Client2 implements MessageListener {
 
+    /**
+     * Cette classe client permet de get le registre Myregistry et de lookup la queue JMS
+     * Cette que notifie quand une objet est enregistré dans le registre
+     * La classe reçoit les message de façon non bloquante (implements MessageListener)
+     * Le onMessage est la méthode de callback
+     */
+
     private static final Logger logger = LogManager.getLogger(Client2.class);
     private static final int PORT_RMI = 4000;
     private static final int PORT_JMS = 61616;

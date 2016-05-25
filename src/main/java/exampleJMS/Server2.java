@@ -12,6 +12,10 @@ import javax.jms.*;
  */
 public class Server2 {
 
+    /**
+     * Cette classe server permet de vérifier que la queue JMS fonctionne et que les messages sont bien reçu chez le client
+     */
+
     private static final Logger logger = LogManager.getLogger(Server2.class);
     private static final int PORT_RMI = 4000;
     private static final int PORT_JMS = 61616;
