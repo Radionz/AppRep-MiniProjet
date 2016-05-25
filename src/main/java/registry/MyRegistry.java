@@ -68,7 +68,7 @@ public class MyRegistry extends UnicastRemoteObject implements IMyRegistry, Seri
             registryTable.put(key, object);
             if (!events.contains(key)) {
                 events.add(new Event(key, timestamp));
-                sendNotification("New object added in the registry. Key: "+key);
+                sendNotification("New object added in the registry. Key: " + key);
             }
             timestamp++;
         } else throw new NotSerializableException();
